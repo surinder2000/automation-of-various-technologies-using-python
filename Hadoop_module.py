@@ -29,12 +29,12 @@ Press 4: Exit""")
                 exit()
             else:
                 print("Invalid choice")
-             con = input("Do you want to continue? (Y/N): ")
+            con = input("Do you want to continue? (Y/N): ")
 
-             if con == "Y" or con == "y":
-                 continue
-             else:
-                 break
+            if con == "Y" or con == "y":
+                continue
+            else:
+                break
 
     
     def OnAWSCloud(self):
