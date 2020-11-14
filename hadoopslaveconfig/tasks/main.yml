@@ -1,0 +1,38 @@
+---
+# tasks file for hadoopconfig
+- name: copy hadoop file
+  copy:
+          src: files/hadoop-1.2.1-1.x86_64.rpm
+          dest: /root
+
+- name: copy jdk file
+  copy:
+          src: files/jdk-8u171-linux-x64.rpm
+          dest: /root
+
+- name: install jdk
+  command: "rpm -i jdk-8u171-linux-x64.rpm"
+  ignore_errors: yes
+
+- name: install hadoop
+  command: "rpm -i hadoop-1.2.1-1.x86_64.rpm --force"
+  ignore_errors: yes
+
+- name: create datanode dir
+  file:
+          state: directory
+          dest: "{{ datanodedir }}"
+- name: config hdfs-site.xml file
+  template:
+          src: templates/hdfs-site.xml.j2
+          dest: /etc/hadoop/hdfs-site.xml
+
+- name: config core-site.xml file
+  template:
+          src: templates/core-site.xml.j2
+          dest: /etc/hadoop/core-site.xml
+
+- name: start service
+  command: "hadoop-daemon.sh  start datanode"
+  ignore_errors: yes
+
