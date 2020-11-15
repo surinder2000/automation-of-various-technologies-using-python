@@ -1,15 +1,40 @@
 #!/usr/bin/python3
 import os
-
+import getpass
 class Hadoop:
     def ConfigureMaster(self):
         ip = input("Enter host IP: ")
+        username = input("Enter user name: ")
+        password = getpass.getpass() 
         namenodedir = input("Enter namenode directory name: ")
+        portno = input("Enter available port number: ")
+        with open('/etc/myhosts.txt', 'w') as file:        
+            file.write(f"[hadoopmaster]\n{ip}  ansible_user={username}  ansible_password={password}\n")
 
+        os.system("cat /etc/myhosts.txt")
+        
+        with open('/Arth_task/automation-of-various-technologies-using-python/hadoopmasterconfig/vars/main.yml','w') as file:
+            file.write(f"---\n# vars file for hadoopconfig\n\nnamenodedir: {namenodedir}\nportnum: {portno}\n")
 
 
     def ConfigureSlaves(self):
-        pass
+        num = input("How many datanodes you want to configure: ")
+        ips = []
+        for i in range(num):
+            print("Provide hosts details\n")
+            ip = input()
+            ips.append(ip)
+        username = input("Enter user name: ")
+        password = getpass.getpass() 
+        namenodedir = input("Enter namenode directory name: ")
+        portno = input("Enter available port number: ")
+        with open('/etc/myhosts.txt', 'w') as file:        
+            file.write(f"[hadoopmaster]\n{ip}  ansible_user={username}  ansible_password={password}\n")
+
+        os.system("cat /etc/myhosts.txt")
+        
+        with open('/Arth_task/automation-of-various-technologies-using-python/hadoopmasterconfig/vars/main.yml','w') as file:
+            file.write(f"---\n# vars file for hadoopconfig\n\nnamenodedir: {namenodedir}\nportnum: {portno}\n")
 
     def OnLocalSystem(self):
         while True:
@@ -123,5 +148,5 @@ Press 8: Exit""")
                 break
 
 h = Hadoop()
-h.Menu()
+h.ConfigureMaster()
 
