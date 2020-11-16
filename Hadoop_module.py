@@ -2,7 +2,13 @@
 import os
 import getpass
 class Hadoop:
-    def ConfigureMaster(self):
+    def ConfigureMasterAWS(self):
+        pass
+
+    def ConfigureSlavesAWS(self):
+        pass
+
+    def ConfigureMasterLocal(self):
         ip = input("Enter host IP: ")
         username = input("Enter user name: ")
         password = getpass.getpass() 
@@ -19,7 +25,7 @@ class Hadoop:
         print("Completed.......")
 
 
-    def ConfigureSlaves(self):
+    def ConfigureSlavesLocal(self):
         num = int(input("How many datanodes you want to configure: "))
         with open('/etc/myhosts.txt','w') as file:
             file.write("[hadoopslave]\n")
@@ -50,9 +56,9 @@ Press 5: Exit""")
 
             ch = int(input("Enter your choice: "))
             if ch == 1:
-                self.ConfigureMaster()
+                self.ConfigureMasterLocal()
             elif ch == 2: 
-                self.ConfigureSlaves()
+                self.ConfigureSlavesLocal()
             elif ch == 3:
                 self.CreateHadoopCluster()
             elif ch == 4:
@@ -70,7 +76,33 @@ Press 5: Exit""")
 
     
     def OnAWSCloud(self):
-        pass
+        while True:
+            os.system('clear')
+            print("""Press 1: Configure Master
+Press 2: Confiure Slaves
+Press 3: Back Menu
+Press 4: Main Menu
+Press 5: Exit""")
+
+            ch = int(input("Enter your choice: "))
+            if ch == 1:
+                self.ConfigureMasterAWS()
+            elif ch == 2: 
+                self.ConfigureSlavesAWS()
+            elif ch == 3:
+                self.CreateHadoopCluster()
+            elif ch == 4:
+                self.Menu()
+            elif ch == 5:
+                exit()
+            else:
+                print("Invalid choice")
+            con = input("Do you want to continue? (Y/N): ")
+
+            if con == "Y" or con == "y":
+                continue
+            else:
+                exit()
 
     def CreateHadoopCluster(self):
         while True:
