@@ -1,0 +1,4 @@
+- name: configure hadoop cluster
+  hosts: hadoopslave
+  roles:
+          - role: hadoopslaveconfig
