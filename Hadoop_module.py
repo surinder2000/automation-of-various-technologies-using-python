@@ -10,38 +10,43 @@ class Hadoop:
         portno = input("Enter available port number: ")
         with open('/etc/myhosts.txt', 'w') as file:        
             file.write(f"[hadoopmaster]\n{ip}  ansible_user={username}  ansible_password={password}\n")
-
-        os.system("cat /etc/myhosts.txt")
         
         with open('/Arth_task/automation-of-various-technologies-using-python/hadoopmasterconfig/vars/main.yml','w') as file:
             file.write(f"---\n# vars file for hadoopconfig\n\nnamenodedir: {namenodedir}\nportnum: {portno}\n")
+        
+        print("Configuration started......")
+        os.system("ansible-playbook hadoopmaster.yml")
+        print("Completed.......")
 
 
     def ConfigureSlaves(self):
-        num = input("How many datanodes you want to configure: ")
-        ips = []
-        for i in range(num):
-            print("Provide hosts details\n")
-            ip = input()
-            ips.append(ip)
-        username = input("Enter user name: ")
-        password = getpass.getpass() 
-        namenodedir = input("Enter namenode directory name: ")
-        portno = input("Enter available port number: ")
-        with open('/etc/myhosts.txt', 'w') as file:        
-            file.write(f"[hadoopmaster]\n{ip}  ansible_user={username}  ansible_password={password}\n")
-
-        os.system("cat /etc/myhosts.txt")
+        num = int(input("How many datanodes you want to configure: "))
+        with open('/etc/myhosts.txt','w') as file:
+            file.write("[hadoopslave]\n")
+            for i in range(num):
+                ip = input(f"Enter IP {i+1}: ")
+                username = input("Enter user name: ")
+                password = getpass.getpass()
+                file.write(f"{ip}  ansible_user={username}  ansible_password={password}\n")
+        datanodedir = input("Enter datanodes directory name: ")
+        masterip = input("Enter master node ip: ")
+        portno = input("Enter master port number: ")
         
-        with open('/Arth_task/automation-of-various-technologies-using-python/hadoopmasterconfig/vars/main.yml','w') as file:
-            file.write(f"---\n# vars file for hadoopconfig\n\nnamenodedir: {namenodedir}\nportnum: {portno}\n")
+        with open('/Arth_task/automation-of-various-technologies-using-python/hadoopslaveconfig/vars/main.yml','w') as file:
+            file.write(f"---\n# vars file for hadoopconfig\n\ndatanodedir: {datanodedir}\nmasterip: {masterip}\nportnum: {portno}\n")
+
+        print("Configuration started.......")
+        os.system("ansible-playbook hadoopslave.yml")
+        print("Completed........")
 
     def OnLocalSystem(self):
         while True:
+            os.system('clear')
             print("""Press 1: Configure Master
 Press 2: Confiure Slaves
 Press 3: Back Menu
-Press 4: Exit""")
+Press 4: Main Menu
+Press 5: Exit""")
 
             ch = int(input("Enter your choice: "))
             if ch == 1:
@@ -49,8 +54,10 @@ Press 4: Exit""")
             elif ch == 2: 
                 self.ConfigureSlaves()
             elif ch == 3:
-                self.OnLocalSystem()
+                self.CreateHadoopCluster()
             elif ch == 4:
+                self.Menu()
+            elif ch == 5:
                 exit()
             else:
                 print("Invalid choice")
@@ -59,7 +66,7 @@ Press 4: Exit""")
             if con == "Y" or con == "y":
                 continue
             else:
-                break
+                exit()
 
     
     def OnAWSCloud(self):
@@ -90,6 +97,12 @@ Press 4: Exit""")
                 continue
             else:
                 break
+
+    def AdminReport(self):
+        clientip = input("Enter client IP: ")
+        clientuser = input("Enter client user name: ")
+
+        os.system(f"ssh {clientuser}@{clientip} hadoop dfsadmin -report")
     
     def UploadFiles(self):
         pass
@@ -112,30 +125,33 @@ Press 4: Exit""")
             os.system("tput setaf 5")
             print("\n----------------Hadoop Management---------------\n")
             print("""Press 1: Create Hadoop Cluster
-Press 2: Upload files into cluster
-Press 3: View files
-Press 4: Remove file from cluster
-Press 5: Add new data node
-Press 6: Increase or Decrease data node size
-Press 7: Back Menu
-Press 8: Exit""")
+Press 2: Hadoop cluster report
+Press 3: Upload files into cluster
+Press 4: View files
+Press 5: Remove file from cluster
+Press 6: Add new data node
+Press 7: Increase or Decrease data node size
+Press 8: Back Menu
+Press 9: Exit""")
 
             ch = int(input("Enter your choice: "))
             if ch == 1:
                 self.CreateHadoopCluster()
             elif ch == 2:
-                self.UploadFiles()
+                self.AdminReport()
             elif ch == 3:
-                self.ViewFiles()
+                self.UploadFiles()
             elif ch == 4:
-                self.RemoveFile()
+                self.ViewFiles()
             elif ch == 5:
-                self.AddNewNode()
+                self.RemoveFile()
             elif ch == 6:
-                self.IncreaseDecreaseNodeSize()
+                self.AddNewNode()
             elif ch == 7:
-                print("Baack menu")
+                self.IncreaseDecreaseNodeSize()
             elif ch == 8:
+                print("Back menu")
+            elif ch == 9:
                 exit()
             else:
                 print("Invalid choice")
@@ -148,5 +164,5 @@ Press 8: Exit""")
                 break
 
 h = Hadoop()
-h.ConfigureMaster()
+h.Menu()
 
