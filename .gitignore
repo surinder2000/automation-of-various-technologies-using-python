@@ -3,3 +3,9 @@ jdk-8u171-linux-x64.rpm
 aws_instance_launch/.terraform/
 aws_instance_launch/terraform.tfstate
 aws_instance_launch/terraform.tfstate.backup
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+aws_master_launch/.terraform/
+aws_master_launch/terraform.tfstate
+aws_master_launch/terraform.tfstate.backup

@@ -2,20 +2,33 @@
 import os
 import getpass
 import fileinput
+import json
 class Hadoop:
     def ConfigureMasterAWS(self):
         amiid = input("Enter AMI ID: ")
         instancetype = input("Enter instance type: ")
-        filename = "aws_instance_launch/instanceLaunch.tf"
+        filepath = "aws_master_launch/instanceLaunch.tf"
 
-        with fileinput.FileInput(filename, inplace = True) as f:
+        with fileinput.FileInput(filepath, inplace = True) as f:
             for l in f:
                 if "ami" in l:
-                    print(f"    ami = {amiid}",end="")
+                    print(f"    ami = \"{amiid}\"\n",end="")
                 elif "instance_type" in l:
-                    print(f"    instance_type = {instancetype}",end="")
+                    print(f"    instance_type = \"{instancetype}\"",end="")
                 else:
                     print(l,end="")
+
+        print("Started Launching.....")
+        os.system("terraform init aws_master_launch/")
+        os.system("terraform apply -auto-approve aws_master_launch/")
+        print("Completed....")
+
+        os.system("terraform output -json > masteroutput.json")
+        with open("masteroutput.json","w") as f:
+            
+
+
+
         
 
     def ConfigureSlavesAWS(self):
