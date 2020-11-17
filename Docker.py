@@ -21,8 +21,7 @@ Press 8: To delete docker OS
 Press 9: To delete All docker OS
 Press 10: To download docker image
 Press 11: To remove docker image
-Press exit: To go back to Main Menu
-Press quit or close: To quit the program \n""")
+Press exit: To Exit""")
             choiceDocker = input('Enter your choice: ')
 
             if choiceDocker == '1' :
@@ -64,9 +63,7 @@ Press quit or close: To quit the program \n""")
                 removeInfo = 'docker rmi -f ' + imageName + ':' + imageVersion
                 os.system(removeInfo)
             elif choiceDocker == 'exit' :
-                break
-            elif (choiceDocker == "quit") or (choiceDocker == "close") :
-                sys.exit("Exiting..")
+                exit("Exiting...")
             else :
                 print(Colors.FG.red,"Error: Wrong Input!",Colors.reset)
             vague_cnf = input("Press Enter to continue...")

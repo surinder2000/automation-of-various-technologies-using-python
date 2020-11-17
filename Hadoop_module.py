@@ -154,7 +154,6 @@ Press 4: Exit""")
     def Menu(self):
         while True:
             os.system("clear")
-            os.system("tput setaf 5")
             print("\n----------------Hadoop Management---------------\n")
             print("""Press 1: Create Hadoop Cluster
 Press 2: Hadoop cluster report
@@ -163,8 +162,7 @@ Press 4: View files
 Press 5: Remove file from cluster
 Press 6: Add new data node
 Press 7: Increase or Decrease data node size
-Press 8: Back Menu
-Press 9: Exit""")
+Press 8: Exit""")
 
             ch = int(input("Enter your choice: "))
             if ch == 1:
@@ -182,19 +180,14 @@ Press 9: Exit""")
             elif ch == 7:
                 self.IncreaseDecreaseNodeSize()
             elif ch == 8:
-                print("Back menu")
-            elif ch == 9:
-                exit()
+                exit("Exiting...")
             else:
                 print("Invalid choice")
                 ch = int(input("Enter your choice: "))
-
             con = input("Do you want to continue? (Y/N): ")
             if con == "Y" or con == "y":
                 continue
             else:
-                break
+                exit("Exiting...")
 
-h = Hadoop()
-h.Menu()
 

@@ -70,7 +70,6 @@ Press 3: Exit""")
     def Menu(self):
         while True:
             os.system("clear")
-            os.system("tput setaf 5")
             print("\n-----------------Machine Learning------------------\n")
             print("""Press 1: Create Model
 Press 2: Exit""")
@@ -89,7 +88,5 @@ Press 2: Exit""")
                 exit()
 
 
-ml = ML()
-ml.Menu()
 
 
