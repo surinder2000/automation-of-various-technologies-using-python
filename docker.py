@@ -1,14 +1,14 @@
 import os
 import sys
 class container:
-    def docker() :
+    def DockerMenu(self) :
         while True:
             os.system('clear')
-            hash()
+            #hash()
             greet = "Welcome to Docker assistant!"
-            print(colors.fg.green)
-            print(greet.center(width))
-            print(colors.reset)
+            #print(colors.fg.green)
+            #print(greet.center(width))
+            #print(colors.reset)
             print("""Press 1: To start docker engine
 Press 2: To stop docker engine
 Press 3: To list docker info
@@ -22,7 +22,7 @@ Press 10: To download docker image
 Press 11: To remove docker image
 Press exit: To go back to Main Menu
 Press quit or close: To quit the program \n""")
-            choiceDocker = input('Enter your choice : ')
+            choiceDocker = input('Enter your choice: ')
 
             if choiceDocker == '1' :
                 os.system('systemctl start docker')
@@ -67,7 +67,7 @@ Press quit or close: To quit the program \n""")
                 sys.exit("Exiting..")
             else :
                 print(colors.fg.red,"Error: Wrong Input!",colors.reset)
-            vague_cnf=input("\n\n Press Enter to continue...")
+            vague_cnf=input("\nPress Enter to continue...")
 
 dock=container()
-dock.docker()
+dock.DockerMenu()
