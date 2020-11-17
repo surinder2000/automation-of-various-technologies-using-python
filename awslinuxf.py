@@ -3,7 +3,7 @@ import sys
 import pyttsx3
 import random
 
-engine = pyttsx3.init('sapi5')
+engine = pyttsx3.init('dummy')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
 engine.setProperty('rate', 230)
@@ -18,7 +18,7 @@ def speak(audio):
 
 
 os.system('clear')
-os.system("aws configure")
+os.system("aws configure --profile myprofile")
 
 #AWS Main Menu
 def aws():
