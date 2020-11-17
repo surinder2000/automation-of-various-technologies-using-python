@@ -71,5 +71,3 @@ Press quit or close: To quit the program \n""")
                 print(Colors.FG.red,"Error: Wrong Input!",Colors.reset)
             vague_cnf = input("Press Enter to continue...")
 
-dock = Container()
-dock.DockerMenu()
