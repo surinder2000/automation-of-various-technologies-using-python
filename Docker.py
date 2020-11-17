@@ -1,14 +1,15 @@
 import os
 import sys
-class container:
-    def DockerMenu(self) :
+from Colors import Colors
+from WelcomePage import WelcomePage
+class Container:
+    def DockerMenu(self):
         while True:
             os.system('clear')
-            #hash()
+            WelcomePage().HypenLine()
             greet = "Welcome to Docker assistant!"
-            #print(colors.fg.green)
-            #print(greet.center(width))
-            #print(colors.reset)
+            print(Colors.FG.green, greet.center(WelcomePage.width),Colors.reset)
+            WelcomePage().HypenLine()
             print("""Press 1: To start docker engine
 Press 2: To stop docker engine
 Press 3: To list docker info
@@ -33,41 +34,42 @@ Press quit or close: To quit the program \n""")
             elif choiceDocker == '4' :
                 os.system('docker ps -a')
             elif choiceDocker == '5' :
-                osName = input("Enter image os : ")
-                osVersion = input("Enter OS version : ")
-                launchInfo = 'docker run -it ' + osName + ':' + osVersion
+                imageName = input("Enter OS Image: ")
+                imageVersion = input("Enter image version: ")
+                OSName = input("Enter name tag: ")
+                launchInfo = 'docker run -dit --name ' + OSName + '  ' + imageName + ':' + imageVersion
                 os.system(launchInfo)
             elif choiceDocker == '6' :
-                osName = input("Enter os name: ")
-                startInfo = 'docker start ' + osName
+                OSName = input("Enter OS name: ")
+                startInfo = 'docker start ' + OSName
                 os.system(startInfo)
             elif choiceDocker == '7' :
-                osName = input("Enter os name: ")
-                attachInfo = 'docker attach ' + osName
+                OSName = input("Enter OS name: ")
+                attachInfo = 'docker attach ' + OSName
                 os.system(attachInfo)
             elif choiceDocker == '8' :
-                osName = input("Enter os name: ")
-                deleteInfo = 'docker rm -f ' + osName
+                OSName = input("Enter OS name: ")
+                deleteInfo = 'docker rm -f ' + OSName
                 os.system(deleteInfo)
             elif choiceDocker == '9' :
-                os.system('docker rm `docker ps -a -q`')
+                os.system('docker rm -f `docker ps -a -q`')
             elif choiceDocker == '10' :
-                osName = input("Enter image os : ")
-                osVersion = input("Enter OS version : ")
-                pullInfo = 'docker pull ' + osName + ':' + osVersion
+                imageName = input("Enter image os: ")
+                imageVersion = input("Enter image version: ")
+                pullInfo = 'docker pull ' + imageName + ':' + imageVersion
                 os.system(pullInfo)
             elif choiceDocker == '11' :
-                osName = input("Enter image os : ")
-                osVersion = input("Enter OS version : ")
-                removeInfo = 'docker rmi -f ' + osName + ':' + osVersion
+                imageName = input("Enter image os : ")
+                imageVersion = input("Enter OS version : ")
+                removeInfo = 'docker rmi -f ' + imageName + ':' + imageVersion
                 os.system(removeInfo)
             elif choiceDocker == 'exit' :
                 break
             elif (choiceDocker == "quit") or (choiceDocker == "close") :
                 sys.exit("Exiting..")
             else :
-                print(colors.fg.red,"Error: Wrong Input!",colors.reset)
-            vague_cnf=input("\nPress Enter to continue...")
+                print(Colors.FG.red,"Error: Wrong Input!",Colors.reset)
+            vague_cnf = input("Press Enter to continue...")
 
-dock=container()
+dock = Container()
 dock.DockerMenu()
