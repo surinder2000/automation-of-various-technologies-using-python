@@ -1,9 +1,22 @@
 #!/usr/bin/python3
 import os
 import getpass
+import fileinput
 class Hadoop:
     def ConfigureMasterAWS(self):
-        pass
+        amiid = input("Enter AMI ID: ")
+        instancetype = input("Enter instance type: ")
+        filename = "aws_instance_launch/instanceLaunch.tf"
+
+        with fileinput.FileInput(filename, inplace = True) as f:
+            for l in f:
+                if "ami" in l:
+                    print(f"    ami = {amiid}",end="")
+                elif "instance_type" in l:
+                    print(f"    instance_type = {instancetype}",end="")
+                else:
+                    print(l,end="")
+        
 
     def ConfigureSlavesAWS(self):
         pass
@@ -76,6 +89,8 @@ Press 5: Exit""")
 
     
     def OnAWSCloud(self):
+        os.system("aws configure --profile myprofile")
+        os.system("export AWS_PROFILE=myprofile")
         while True:
             os.system('clear')
             print("""Press 1: Configure Master

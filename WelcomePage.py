@@ -9,7 +9,7 @@ class WelcomePage:
         print(Colors.FG.pink,hashsymbol.center(self.width-2,'-'),Colors.reset)
 
     def PrintHeader(self):
-        self.HashLine()
+        self.HypenLine()
         print('\n\n')
         text1 = "ARTH"
         print(Colors.FG.red, Colors.bold, text1.center(self.width-6),Colors.reset)
@@ -23,6 +23,6 @@ class WelcomePage:
         welcomeLine = 'Welcome!!'
         print(welcomeLine.center(self.width),Colors.FG.lightgrey)
         print("Press enter to Continue...")
-        self.HashLine()
+        self.HypenLine()
         input()
 

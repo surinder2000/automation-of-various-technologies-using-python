@@ -40,8 +40,8 @@ resource "aws_security_group" "hadoopFirewall" {
 }
 
 resource "aws_instance" "Hadoop_master" {
-    ami = "ami-052c08d70def0ac62"
-    instance_type = "t2.micro"
+    ami = "1234561"
+    instance_type = "t2.small"
     key_name = aws_key_pair.newKey.key_name 
     security_groups = [ "${aws_security_group.hadoopFirewall.name}"]
     count = 1
