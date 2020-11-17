@@ -41,13 +41,16 @@ os.system('clear')
 hashLine = '#'
 print(colors.fg.pink,end="")
 print(hashLine.center(width,'#'),colors.reset)
-print('\n\n\n\n\n\n')
-
-print(colors.fg.red, colors.bold,'\t\t\t\t\t\t\t\t\t\tA',end="")
+print('\n\n\n\n\n')
+charA = "ARTH"
+print(colors.fg.red, colors.bold, charA.center(width-6))
 print(colors.reset,end="")
-print("rth\n\n")
-print("\t\t\t\t\t\t\t\t\t     Team Task\n\n")
-print(colors.fg.lightcyan,"\t\t\t\t\t\t   'Menu based Python program integrating all learnt technologies'",colors.reset)
+print("\n\n")
+text = "Team Task"
+print(text.center(width))
+print("\n\n")
+title = "Menu based program for integrating various technologies"
+print(colors.fg.lightcyan,title.center(width),colors.reset)
 print("\n\n")
 
 welcomeLine = 'Welcome!!'
@@ -55,7 +58,7 @@ print(welcomeLine.center(width))
 
 print(colors.fg.lightgrey,end="")
 continueLine = "Press enter to Continue..."
-print(continueLine.center(width),colors.reset)
+print(continueLine)
 
 print('\n\n\n\n\n\n')
 print(colors.fg.pink,end="")
