@@ -8,13 +8,13 @@ resource "tls_private_key" "keyGenerate" {
 }
 
 resource "aws_key_pair" "newKey" {
-    key_name = "Hadoopmasterkey"
+    key_name = "Hadoopslavekey"
     public_key = tls_private_key.keyGenerate.public_key_openssh
 }
 
 resource "local_file" "keySave" {
     content = tls_private_key.keyGenerate.private_key_pem
-    filename = "Hadoopmasterkey.pem"
+    filename = "Hadoopslavekey.pem"
 }
 
 resource "aws_security_group" "hadoopFirewall" {
@@ -44,13 +44,14 @@ resource "aws_security_group" "hadoopFirewall" {
     }
 }
 
-resource "aws_instance" "Hadoop_master" {
-    ami = ""
-    instance_type = ""
+resource "aws_instance" "Hadoop_slave" {
+    ami = "ami-0a9d27a9f4f5c0efc"
+    instance_type = "t2.micro"
     key_name = aws_key_pair.newKey.key_name 
     security_groups = [ "${aws_security_group.hadoopFirewall.name}"]
+    count = "2"
     tags = {
-        Name = "Hadoop-master"
+        Name = "Hadoop-slave"
     }
     depends_on = [
         aws_key_pair.newKey,
@@ -58,10 +59,10 @@ resource "aws_instance" "Hadoop_master" {
     ]
 }
 
-output "MasterPublicIP" {
-    value = aws_instance.Hadoop_master.public_ip
+output "SlavePublicIP" {
+    value = aws_instance.Hadoop_slave.*.public_ip
 }
 
-output "MasterKeyName" {
-    value = aws_instance.Hadoop_master.key_name
+output "SlaveKeyName" {
+    value = aws_instance.Hadoop_slave.*.key_name
 }

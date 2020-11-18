@@ -1,0 +1,4 @@
+- name: configure hadoop client
+  hosts: hadoopclient
+  roles:
+          - role: hadoopclientconfig

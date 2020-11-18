@@ -18,6 +18,10 @@
   command: "rpm -i hadoop-1.2.1-1.x86_64.rpm --force"
   ignore_errors: yes
 
+- name: create datanode dir
+  file:
+          state: directory
+          dest: "{{ datanodedir }}"
 - name: config hdfs-site.xml file
   template:
           src: templates/hdfs-site.xml.j2
@@ -28,4 +32,7 @@
           src: templates/core-site.xml.j2
           dest: /etc/hadoop/core-site.xml
 
+- name: start service
+  command: "hadoop-daemon.sh  start datanode"
+  ignore_errors: yes
 
