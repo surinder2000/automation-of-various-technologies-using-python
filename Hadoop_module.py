@@ -86,7 +86,41 @@ class Hadoop:
         print("Completed........")
 
     def ConfigureClientAWS(self):
-        pass
+        amiid = input("Enter AMI ID: ")
+        instancetype = input("Enter instance type: ")
+        filepath = "aws_client_launch/instanceLaunch.tf"
+
+        with fileinput.FileInput(filepath, inplace = True) as f:
+            for l in f:
+                if "ami" in l:
+                    print(f"    ami = \"{amiid}\"\n",end="")
+                elif "instance_type" in l:
+                    print(f"    instance_type = \"{instancetype}\"\n",end="")
+                else:
+                    print(l,end="")
+
+        print("Started launching...")
+        os.system("terraform init aws_client_launch/")
+        os.system("terraform apply -auto-approve aws_client_launch/")
+
+        os.system("terraform output -json > clientoutput.json")
+
+        os.system("chmod 400 Hadoopclientkey.pem")
+        with open('clientoutput.json','r') as f:
+            outputvalue = json.load(f)
+
+        username = input("Enter user name: ")
+        with open('/etc/myhosts.txt', 'w') as f:
+            f.write(f"[hadoopclient]\n{outputvalue['ClientPublicIP']['value']}  ansible_user={username}  ansible_ssh_private_key_file={outputvalue['ClientKeyName']['value']}.pem\n")
+
+        masterip = intput("Enter master node ip: ")
+        portno = input("Enter master port number: ")
+        with open('/Arth_task/automation-of-various-technologies-using-python/hadoopclientconfig/vars/main.yml','w') as f:
+            f.write(f"---\n# vars file for hadoopconfig\n\nmasterip: {masterip}\nportnum: {portno}\n")
+
+        print("Configuration started.......")
+        os.system("ansible-playbook hadoopclient.yml")
+        print("Completed........")
         
 
     def ConfigureMasterLocal(self):
@@ -127,7 +161,22 @@ class Hadoop:
         print("Completed........")
 
     def ConfigureClientLocal(self):
-        pass
+        with open('/etc/myhosts.txt','w') as f:
+            ip = input(f"Enter IP: ")
+            username = input("Enter user name: ")
+            password = getpass.getpass()
+            f.write(f"[hadoopclient]\n{ip}  ansible_user={username}  ansible_password={password}\n")
+        masterip = input("Enter master node ip: ")
+        portno = input("Enter master port number: ")
+        
+        with open('/Arth_task/automation-of-various-technologies-using-python/hadoopclientconfig/vars/main.yml','w') as f:
+            f.write(f"---\n# vars file for hadoopconfig\n\nmasterip: {masterip}\nportnum: {portno}\n")
+
+        print("Configuration started.......")
+        os.system("ansible-playbook hadoopclient.yml")
+        print("Completed........")
+
+
 
     def OnLocalSystem(self):
         while True:
@@ -225,8 +274,11 @@ Press 4: Exit""")
     def AdminReport(self):
         clientip = input("Enter client IP: ")
         clientuser = input("Enter client user name: ")
-
-        os.system(f"ssh {clientuser}@{clientip} hadoop dfsadmin -report")
+        keyname = input("Enter key name (If client on AWS else press enter): ")
+        if keyname == "":
+            os.system(f"ssh {clientuser}@{clientip} hadoop dfsadmin -report")
+        else:
+            os.system(f"ssh -i {keyname} {clientuser}@{clientip} hadoop dfsadmin -report")
     
     def UploadFiles(self):
         pass

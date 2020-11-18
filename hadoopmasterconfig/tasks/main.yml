@@ -22,6 +22,7 @@
   file:
           state: directory
           dest: "{{ namenodedir }}"
+
 - name: config hdfs-site.xml file
   template:
           src: templates/hdfs-site.xml.j2
@@ -31,6 +32,7 @@
   template:
           src: templates/core-site.xml.j2
           dest: /etc/hadoop/core-site.xml
+
 - name: format namenode
   command: "hadoop namenode -format -force"
   ignore_errors: yes
