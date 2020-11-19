@@ -1,5 +1,0 @@
-To run all the functions of aws automation service, you need following pre-requisites:
-a) Amazon Web Service Account
-b) An IAM user with all the premissions. Power Access User is recommended (but To manage even IAM users, either give specific permission or give Administrative access)
-c) Latest version of AWS CLI, i.e. AWS CLI V2
-d) Modules of python like pyttsx3

@@ -1,0 +1,18 @@
+[AWS]
+Amazon Web Service Account
+An IAM user with Power and Administrative access premissions
+AWS CLI (Latest) configured
+
+[Machine Learning]
+Docker installed
+
+[Hadoop]
+Terraform configured
+AWS CLI configured
+Ansible installed
+
+[Docker]
+Docker installed
+
+
+Enjoy!!
