@@ -576,8 +576,3 @@ Press exit: To exit""")
     
     #AWS Main Menu end
 
-aws = AWS()
-
-#MAIN FUNCTION CALLING
-if __name__=='__main__':
-	aws.Menu()

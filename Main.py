@@ -3,6 +3,7 @@ from Colors import Colors
 from ML_module import ML
 from Hadoop_module import Hadoop
 from Docker import Container
+from AWS import AWS
 import os
 def MainMenu():
     while True:
@@ -25,7 +26,7 @@ Press 5: Exit""")
         if ch == 1:
             Hadoop().Menu()
         elif ch == 2:
-            pass
+            AWS().Menu()
         elif ch == 3:
             Container().DockerMenu()
         elif ch == 4:
