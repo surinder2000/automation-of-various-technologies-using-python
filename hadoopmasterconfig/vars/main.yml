@@ -1,5 +1,5 @@
 ---
 # vars file for hadoopconfig
 
-namenodedir: /nd
-portnum: 9100
+namenodedir: /nn
+portnum: 9101

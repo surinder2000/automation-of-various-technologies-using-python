@@ -181,7 +181,7 @@ class Hadoop:
     def OnLocalSystem(self):
         while True:
             os.system('clear')
-            print("""Press 1: Configure Master
+            print("""\n\nPress 1: Configure Master
 Press 2: Confiure Slaves
 Press 3: Confiure Client
 Press 4: Back Menu
@@ -216,7 +216,7 @@ Press 6: Exit""")
         os.system("export AWS_PROFILE=myprofile")
         while True:
             os.system('clear')
-            print("""Press 1: Configure Master
+            print("""\n\nPress 1: Configure Master
 Press 2: Confiure Slaves
 Press 3: Configure Client
 Press 4: Back Menu
@@ -238,7 +238,7 @@ Press 6: Exit""")
                 exit()
             else:
                 print("Invalid choice")
-            con = input("Do you want to continue? (Y/N): ")
+            con = input("\nDo you want to continue? (Y/N): ")
 
             if con == "Y" or con == "y":
                 continue
@@ -248,8 +248,8 @@ Press 6: Exit""")
     def CreateHadoopCluster(self):
         while True:
             os.system('clear')
-            print("Where do you want to create cluster")
-            print("""Press 1: On local system
+            print("------Where do you want to create cluster------")
+            print("""\n\nPress 1: On local system
 Press 2: On AWS cloud
 Press 3: Back Menu
 Press 4: Exit""")
@@ -281,19 +281,40 @@ Press 4: Exit""")
             os.system(f"ssh -i {keyname} {clientuser}@{clientip} hadoop dfsadmin -report")
     
     def UploadFiles(self):
-        pass
+        filepath = input("Enter file path: ")
+        os.system(f"hadoop fs -put {filepath} /")
+        print("Uploaded!!")
     
     def ViewFiles(self):
-        pass
+        print("Viewing files in hadoop cluster....\n")
+        os.system("hadoop fs -ls /")
 
     def RemoveFile(self):
-        pass
+        filepath = input("Enter file path to remove from hadoop: ")
+        os.system(f"hadoop fs -rm {filepath}")
+        print("Deleted...")
 
     def AddDataNode(self):
-        pass
+        with open('/etc/myhosts.txt','w') as f:
+            ip = input(f"Enter host IP: ")
+            username = input("Enter user name: ")
+            password = getpass.getpass()
+            f.write(f"[hadoopslave]\n{ip}  ansible_user={username}  ansible_password={password}\n")
+
+        datanodedir = input("Enter datanode directory name: ")
+        masterip = input("Enter master node ip: ")
+        portno = input("Enter master port number: ")
+        
+        with open('/Arth_task/automation-of-various-technologies-using-python/hadoopslaveconfig/vars/main.yml','w') as f:
+            f.write(f"---\n# vars file for hadoopconfig\n\ndatanodedir: {datanodedir}\nmasterip: {masterip}\nportnum: {portno}\n")
+
+        print("Configuration started.......")
+        os.system("ansible-playbook hadoopslave.yml")
+        print("Completed........")
+
 
     def IncreaseDecreaseHadoopNodeSize(self):
-        pass
+        print("Service available soon!!")
 
     def Menu(self):
         while True:

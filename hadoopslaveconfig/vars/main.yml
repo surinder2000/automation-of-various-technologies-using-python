@@ -1,6 +1,6 @@
 ---
 # vars file for hadoopconfig
 
-datanodedir: /dd
+datanodedir: /dn1
 masterip: 192.168.43.85
-portnum: 9100
+portnum: 9101
