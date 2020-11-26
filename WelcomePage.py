@@ -21,8 +21,8 @@ class WelcomePage:
         print(Colors.FG.lightcyan,title.center(self.width),Colors.reset)
         print("\n\n")
         welcomeLine = 'Welcome!!'
-        print(welcomeLine.center(self.width),Colors.FG.lightgrey)
-        print("Press enter to Continue...")
+        print(welcomeLine.center(self.width),Colors.FG.blue)
+        print(" Press enter to Continue...\n")
         self.HypenLine()
         input()
 
